@@ -1202,9 +1202,16 @@ legend {
 }
 
 /*================ We don't want the same label treatment for checkboxes/radios ================*/
-input[type="checkbox"] + label,
-input[type="radio"] + label {
-  font-weight: normal;
+input[type="checkbox"],
+input[type="radio"] {
+
+  & + label {
+    display: inline-block;
+    font-weight: normal;
+  }
+  &:disabled + label {
+    color: #999999;
+  }
 }
 
 label[for] {
