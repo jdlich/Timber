@@ -278,6 +278,17 @@ $pull:               false;
   box-sizing:border-box;
 }
 
+.grid-uniform {
+  font-size: 0;
+
+  > .grid-item {
+    float: none;
+    display: inline-block;
+    white-space: normal;
+    font-size: 1.4rem;
+  }
+}
+
 /*============================================================================
   Reversed grids allow you to structure your source in the opposite
   order to how your rendered layout will appear.
@@ -394,27 +405,6 @@ $pull:               false;
   .#{$namespace}eleven-twelfths { width:91.666%; }
 }
 
-/*================ Clearfix helper on uniform grids ================*/
-@mixin clearfix-helper($namespace:"") {
-  .grid-uniform {
-    .#{$namespace}one-half:nth-child(2n+1),
-    .#{$namespace}one-third:nth-child(3n+1),
-    .#{$namespace}one-quarter:nth-child(4n+1),
-    .#{$namespace}one-fifth:nth-child(5n+1),
-    .#{$namespace}one-sixth:nth-child(6n+1),
-    .#{$namespace}two-sixths:nth-child(3n+1),
-    .#{$namespace}three-sixths:nth-child(2n+1),
-    .#{$namespace}two-eighths:nth-child(4n+1),
-    .#{$namespace}four-eighths:nth-child(2n+1),
-    .#{$namespace}five-tenths:nth-child(2n+1),
-    .#{$namespace}one-twelfth:nth-child(12n+1),
-    .#{$namespace}two-twelfths:nth-child(6n+1),
-    .#{$namespace}three-twelfths:nth-child(4n+1),
-    .#{$namespace}four-twelfths:nth-child(3n+1),
-    .#{$namespace}six-twelfths:nth-child(2n+1)    { clear:both; }
-  }
-}
-
 /*============================================================================
   HELPERS
 ==============================================================================*/
@@ -442,7 +432,6 @@ $pull:               false;
     @include grid-media-query($name) {
       @include device-type('#{$name}--');
       @include device-helper('#{$name}--');
-      @include clearfix-helper('#{$name}--');
     }
   }
 }
