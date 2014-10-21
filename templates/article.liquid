@@ -29,15 +29,13 @@
   <article class="grid-item large--three-quarters" itemscope itemtype="http://schema.org/Article">
 
     <header class="section-header">
-      <div class="section-header--left">
-        <h1>{{ article.title }}</h1>
-        <p class="text-light">
-          Posted by <strong>{{ article.author }}</strong> at
-          <strong><time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-            {{ article.published_at | date: '%b %d, %Y' }}
-          </time></strong>
-        </p>
-      </div>
+      <h1>{{ article.title }}</h1>
+      <p class="text-light">
+        Posted by <strong>{{ article.author }}</strong> at
+        <strong><time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+          {{ article.published_at | date: '%b %d, %Y' }}
+        </time></strong>
+      </p>
     </header>
 
     <div class="rte" itemprop="articleBody">
