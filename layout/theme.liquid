@@ -108,5 +108,9 @@
 
   {% include 'timber-ajax-cart' %}
 
+  {% if template contains "product" %}
+    {% include 'product-scripts' %}
+  {% endif %}
+
 </body>
 </html>
