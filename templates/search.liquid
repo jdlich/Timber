@@ -12,6 +12,27 @@
 
 {% endcomment %}
 
+{% capture search_title %}
+  {% if search.performed and search.results_count == 0 %}
+    {{ settings.search_title_no_results }}
+  {% endif %}
+
+  {% if search.results_count > 0 %}
+    {{ settings.search_title_results }}
+  {% endif %}
+
+  {% if search.performed == false %}
+    {{ settings.search_title_no_search }}
+  {% endif %}
+{% endcapture %}
+
+{% capture search_header %}
+  <h2 class="text-center">
+    {{ search_title | strip | replace: "[KEYWORDS]", search.terms }}
+  </h2>
+  {% include 'search-bar' %}
+{% endcapture %}
+
 {% comment %}
   If you're only showing products with the method above, why not show them off in a grid instead?
   Set grid_results to true and see your updated results page for the new layout.
@@ -21,68 +42,31 @@
 <div class="grid">
   <div class="grid-item large--two-thirds push--large--one-sixth">
 
-    {% if search.performed %}
+    {{ search_header }}
 
-      {% comment %}
-        Avoid accessing search.results before the opening paginate tag.
-        If you do, the pagination of results will be broken.
-      {% endcomment %}
+    {% if search.performed and search.results_count > 0 %}
       {% paginate search.results by 10 %}
 
-        {% comment %}
-          We don't have any results to show. Feel free to show off featured products
-          or suggested searches here.
-        {% endcomment %}
-        {% if search.results_count == 0 %}
-
-          <h2 class="text-center">Your search for "{{ search.terms }}" did not yield any results.</h2>
-          {% include 'search-bar' %}
-
-        {% else %}
-
-          <h2 class="text-center">Your search for "{{ search.terms }}" revealed the following:</h2>
-          {% include 'search-bar' %}
-
-          {% comment %}
-            Each result template, based on the grid_layout variable above
-          {% endcomment %}
           {% if grid_results == false %}
-
             {% for item in search.results %}
               {% include 'search-result' %}
             {% endfor %}
-
           {% else %}
-
             <div class="grid-uniform">
               {% for item in search.results %}
                 {% assign grid_item_width = 'large--one-quarter medium--one-third small--one-half' %}
                 {% include 'search-result-grid' %}
               {% endfor %}
             </div>
-
           {% endif %}
 
-        {% endif %}
-
-        {% if paginate.pages > 1 %}
-          <div class="text-center">
-            {% include 'pagination-custom' %}
-          </div>
-        {% endif %}
+          {% if paginate.pages > 1 %}
+            <div class="text-center">
+              {% include 'pagination-custom' %}
+            </div>
+          {% endif %}
 
       {% endpaginate %}
-
-    {% else %}
-
-      {% comment %}
-        If search.performed is false, someone either accessed the page without
-        the q parameter, or it was blank.
-        Be sure to show a search form here, along with anything else you want to showcase.
-      {% endcomment %}
-      <h2 class="text-center">Search for products on our site</h2>
-      {% include 'search-bar' %}
-
     {% endif %}
 
   </div>

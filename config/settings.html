@@ -163,6 +163,50 @@
   <p>Add any custom settings for the collection listing pages here.</p>
 </fieldset>
 
+<fieldset>
+  <legend>Search</legend>
+  <table>
+    <tr>
+      <th>
+        <label for="search_form_placeholder">Form Placeholder Text</label>
+      </th>
+      <td>
+        <input type="text" id="search_form_placeholder" name="search_form_placeholder" class="text" value="Search our store" />
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <label for="search_title_no_search">Title for No Search</label>
+      </th>
+      <td>
+        <textarea id="search_title_no_search" name="search_title_no_search">
+          Search for products on our site
+        </textarea>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <label for="search_title_results">Title for Results</label>
+      </th>
+      <td>
+        <textarea id="search_title_results" name="search_title_results">
+          Search results for "[KEYWORDS]"
+        </textarea>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <label for="search_title_no_results">Title for No Results</label>
+      </th>
+      <td>
+        <textarea id="search_title_no_results" name="search_title_no_results">
+          Your search for "[KEYWORDS]" did not yield any results.
+        </textarea>
+      </td>
+    </tr>
+  </table>
+</fieldset>
+
 <!-- Blog Pages -->
 <fieldset>
   <legend>Blog Pages</legend>
@@ -171,7 +215,7 @@
 
 <!-- Cart Pages -->
 <fieldset>
-  <legend>Cart pages</legend>
+  <legend>Cart</legend>
   <table>
     <tr>
       <td><label for="cart_notes">Allow customers to add notes to their order</label></td>
