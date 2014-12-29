@@ -102,6 +102,7 @@
 
   {% include 'javascript-templates' %}
 
+  {{ 'theme.js' | asset_url | script_tag }}
   {{ 'timber.js' | asset_url | script_tag }}
 
   {% include 'timber-ajax-cart' %}
