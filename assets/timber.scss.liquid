@@ -143,6 +143,23 @@ $radius: 3px;
   @extend .clearfix;
 }
 
+%hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+%invisible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
 @mixin box-shadow($shadow) {
   -webkit-box-shadow: #{$shadow};
   -moz-box-shadow:    #{$shadow};
