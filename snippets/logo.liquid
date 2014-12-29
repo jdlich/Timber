@@ -1,0 +1,18 @@
+{% comment %}
+  Site name gets precedence with H1 tag on homepage, div on other pages.
+{% endcomment %}
+{% capture tag %}
+  {% case template %}
+  {% when "index" %}
+    h1
+  {% else %}
+    div
+  {% endcase %}
+{% endcapture %}
+{% assign tag = tag | strip %}
+
+<{{ tag }} class="header-logo large--left" itemscope itemtype="http://schema.org/Organization">
+  <a href="/" itemprop="url">
+    <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo" />
+  </a>
+</{{ tag }}>
