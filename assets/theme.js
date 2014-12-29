@@ -16,4 +16,19 @@ window.matchMedia||(window.matchMedia=function(){"use strict";var styleMedia=win
 
 $(function () {
   FastClick.attach(document.body);
+
+  // Collection sorting
+  (function () {
+    var sort_by_menu = $('[data-sort-by]');
+    var sort_by = sort_by_menu.attr("data-sort-by");
+
+    sort_by_menu
+      .val(sort_by)
+      .bind('change', function() {
+        var params = $.getQueryParams();
+        params.sort_by = $(this).val();
+        location.search = $.param(params);
+      }
+    );
+  })();
 });
