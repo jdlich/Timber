@@ -710,56 +710,15 @@ hr {
     margin-top: -0.4em; // don't exceed h1 margin-bottom
   }
 
-  .form-horizontal,
-  .collection-view {
+  .form-horizontal {
     display: inline-block;
     vertical-align: middle;
   }
 
   @include at-query ($min, $post-small) {
-    label + select,
-    .collection-view {
+    label + select {
       margin-left: $gutter/2;
     }
-  }
-}
-
-.collection-view {
-  display: inline-block;
-  border: 1px solid $border-color;
-  border-radius: $radius;
-  padding: 11px;
-  height: 37px; // same as form elements
-
-  /*================ We use SVG icons, so simply hide this in oldIE ================*/
-  .lt-ie9 & {
-    display: none;
-  }
-
-  /*================ Only show on larger screens ================*/
-  @include at-query ($min, $large) {
-    display: inline-block;
-  }
-
-  a {
-    display: block;
-    float: left;
-    opacity: 0.7;
-    cursor: pointer;
-
-    & + a {
-      margin-left: 10px;
-    }
-
-    &.collection-view--active {
-      opacity: 1;
-      cursor: default;
-    }
-  }
-
-  img {
-    display: block;
-    opacity: inherit;
   }
 }
 
@@ -1251,18 +1210,18 @@ label.error {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-american_express:before { content: "\41"; }
+.icon-american-express:before { content: "\41"; }
 .icon-arrow-down:before { content: "\34"; }
 .icon-bitcoin:before { content: "\42"; }
 .icon-cart:before { content: "\5b"; }
 .icon-cirrus:before { content: "\43"; }
-.icon-diners_club:before { content: "\63"; }
+.icon-diners-club:before { content: "\63"; }
 .icon-discover:before { content: "\44"; }
 .icon-dk:before { content: "\64"; }
 .icon-facebook:before { content: "\66"; }
 .icon-fancy:before { content: "\46"; }
 .icon-google:before { content: "\67"; }
-.icon-google_wallet:before { content: "\47"; }
+.icon-google-wallet:before { content: "\47"; }
 .icon-instagram:before { content: "\69"; }
 .icon-interac:before { content: "\49"; }
 .icon-jcb:before { content: "\4a"; }
