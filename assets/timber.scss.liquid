@@ -62,45 +62,45 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 ==============================================================================*/
 
 // Timber Colors
-$colorPrimary: {{ settings.color_primary }};
-$colorSecondary: {{ settings.color_secondary }};
+$color-primary: {{ settings.color_primary }};
+$color-secondary: {{ settings.color_secondary }};
 
 // Button colors
-$colorBtnPrimary: $colorPrimary;
-$colorBtnPrimaryHover: darken($colorBtnPrimary, 10%);
-$colorBtnPrimaryActive: darken($colorBtnPrimaryHover, 10%);
+$color-btn-primary: $color-primary;
+$color-btn-primaryHover: darken($color-btn-primary, 10%);
+$color-btn-primaryActive: darken($color-btn-primaryHover, 10%);
 
-$colorBtnSecondary: $colorSecondary;
-$colorBtnSecondaryHover: darken($colorBtnSecondary, 10%);
-$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
+$color-btn-secondary: $color-secondary;
+$color-btn-secondary-hover: darken($color-btn-secondary, 10%);
+$color-btn-secondary-active: darken($color-btn-secondary-hover, 10%);
 
 // Text link colors
-$colorLink: $colorPrimary;
-$colorLinkHover: #333;
+$color-link: $color-primary;
+$color-link-hover: #333;
 
 // Text colors
-$colorBody: #fff;
-$colorTextBody: {{ settings.color_body_text }};
-$colorHeaders: #999;
-$colorTextGrey: #777;
+$color-body: #fff;
+$color-text-body: {{ settings.color_body_text }};
+$color-headers: #999;
+$color-text-grey: #777;
 
 // Border colors
-$borderColor: #e5e5e5;
+$border-color: #e5e5e5;
 
 // Nav and dropdown link background
-$colorNav: #f2f2f2;
-$colorNavText: #333;
+$color-nav: #f2f2f2;
+$color-nav-text: #333;
 
 // Footer
-$colorFooterBg: {{ settings.color_footer_bg }};
-$colorFooterText: {{ settings.color_footer_text }};
+$color-footer-bg: {{ settings.color_footer_bg }};
+$color-footer-text: {{ settings.color_footer_text }};
 
 // Helper colors
-$disabledGrey: #f6f6f6;
-$disabledBorder: darken($disabledGrey, 25%);
-$errorRed: #dc0000;
-$errorRedBg: lighten($errorRed, 55%);
-$successGreen: #0a942a;
+$disabled-grey: #f6f6f6;
+$disabled-border: darken($disabled-grey, 25%);
+$error-red: #dc0000;
+$error-red-bg: lighten($error-red, 55%);
+$success-green: #0a942a;
 
 // Radius
 $radius: 3px;
@@ -109,23 +109,23 @@ $radius: 3px;
   #Breakpoint and Grid Variables
 ==============================================================================*/
 
-$siteWidth: 1180px;
+$site-width: 1180px;
 $gutter: 24px;
-$gridGutter: 24px; // can be a %, but nested grids will have smaller margins because of it
+$grid-gutter: 24px; // can be a %, but nested grids will have smaller margins because of it
 
-$viewportIncrement: 1px;
+$viewport-increment: 1px;
 
 $small: 480px;
 $medium: 768px;
 $large: 769px;
 
-$postSmall: $small + $viewportIncrement;
-$preMedium: $medium - $viewportIncrement;
-$preLarge: $large - $viewportIncrement;
+$post-small: $small + $viewport-increment;
+$pre-medium: $medium - $viewport-increment;
+$pre-large: $large - $viewport-increment;
 
 $breakpoints: (
   'small' '(max-width: #{$small})',
-  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
+  'medium' '(min-width: #{$post-small}) and (max-width: #{$medium})',
   'medium-down' '(max-width: #{$medium})',
   'large' '(min-width: #{$large})'
 );
@@ -160,15 +160,6 @@ $max: max-width;
   #Grid Setup
 ==============================================================================*/
 
-.grid,
-.grid-uniform {
-  @extend %clearfix;
-}
-
-.grid-item.clear {
-  clear: both;
-}
-
 @mixin grid-media-query($media-query) {
   $breakpoint-found: false;
 
@@ -190,24 +181,31 @@ $max: max-width;
   }
 }
 
-/*============================================================================
-  #Grid
-==============================================================================*/
+@mixin grid-set-gutter($size) {
+  margin-left: -$size;
+
+  > .grid-item {
+    padding-left: $size;
+  }
+}
 
 .grid,
 .grid-uniform {
-  list-style:none;
-  margin:0;
-  padding:0;
-  margin-left: -$gridGutter;
+  @extend %clearfix;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: -$grid-gutter;
 }
+
 .grid-item {
   float: left;
-  padding-left: $gridGutter;
+  padding-left: $grid-gutter;
   vertical-align: top;
   width: 100%;
   @include vendor-prefix(box-sizing, border-box);
 }
+
 .grid-uniform {
   font-size: 0;
 
@@ -531,16 +529,16 @@ $max: max-width;
 ==============================================================================*/
 
 html {
-  background-color: $colorFooterBg;
+  background-color: $color-footer-bg;
 }
 
 body {
-  background-color: $colorBody;
+  background-color: $color-body;
 }
 
 .wrapper {
   @extend %clearfix;
-  max-width: $siteWidth;
+  max-width: $site-width;
   margin: 0 auto;
   padding: 0 $gutter/2;
 
@@ -581,7 +579,7 @@ select,
 button {
   font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.4rem; // 14px
-  color: $colorTextBody;
+  color: $color-text-body;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
@@ -628,16 +626,16 @@ sup {
   font-size: 0.8rem;
 }
 
-.text-light { color: $colorTextGrey; }
+.text-light { color: $color-text-grey; }
 
 /*================ Blockquotes ================*/
 blockquote {
   font-size: 1.6rem;
-  color: $colorTextGrey;
+  color: $color-text-grey;
   font-style: italic;
   margin: 0 0 $gutter;
   padding: $gutter/2 $gutter;
-  border-left: 1px solid $borderColor;
+  border-left: 1px solid $border-color;
 
   p {
     margin-bottom: 0;
@@ -650,7 +648,7 @@ blockquote {
   cite {
     display: block;
     font-size: 1.4rem;
-    color: $colorTextGrey;
+    color: $color-text-grey;
 
     &:before {
       content: "\2014 \0020";
@@ -660,7 +658,7 @@ blockquote {
 
 hr {
   clear: both;
-  border-top: solid $borderColor;
+  border-top: solid $border-color;
   border-width: 1px 0 0;
   margin: $gutter*2 0;
 
@@ -718,7 +716,7 @@ hr {
     vertical-align: middle;
   }
 
-  @include at-query ($min, $postSmall) {
+  @include at-query ($min, $post-small) {
     label + select,
     .collection-view {
       margin-left: $gutter/2;
@@ -728,7 +726,7 @@ hr {
 
 .collection-view {
   display: inline-block;
-  border: 1px solid $borderColor;
+  border: 1px solid $border-color;
   border-radius: $radius;
   padding: 11px;
   height: 37px; // same as form elements
@@ -798,13 +796,13 @@ hr {
   #Links and Buttons
 ==============================================================================*/
 a {
-  color: $colorLink;
+  color: $color-link;
   text-decoration: underline;
 }
 
 a:hover,
 a:focus {
-  color: $colorLinkHover;
+  color: $color-link-hover;
 }
 
 .btn {
@@ -832,40 +830,40 @@ a:focus {
   }
 
   /*================ Set primary button colors - can override later ================*/
-  background-color: $colorBtnPrimary;
+  background-color: $color-btn-primary;
   color: #fff;
 
   &:hover {
-    background-color: $colorBtnPrimaryHover;
+    background-color: $color-btn-primaryHover;
     color: #fff;
   }
 
   &:active,
   &:focus {
-   background-color: $colorBtnPrimaryActive;
+   background-color: $color-btn-primaryActive;
    color: #fff;
   }
 
   &[disabled],
   &.disabled {
     cursor: default;
-    color: $disabledBorder;
-    background-color: $disabledGrey;
+    color: $disabled-border;
+    background-color: $disabled-grey;
   }
 }
 
 .btn-secondary {
   @extend .btn;
-  background-color: $colorBtnSecondary;
+  background-color: $color-btn-secondary;
 
   &:hover {
-    background-color: $colorBtnSecondaryHover;
+    background-color: $color-btn-secondary-hover;
     color: #fff;
   }
 
   &:active,
   &:focus {
-   background-color: $colorBtnSecondaryActive;
+   background-color: $color-btn-secondary-active;
    color: #fff;
   }
 }
@@ -912,7 +910,7 @@ th {
 th, td {
   text-align: left;
   padding: $gutter/2;
-  border: 1px solid $borderColor;
+  border: 1px solid $border-color;
 }
 
 
@@ -1018,21 +1016,21 @@ input[type="number"],
 input[type="tel"],
 textarea,
 select {
-  border: 1px solid $borderColor;
+  border: 1px solid $border-color;
   width: 100%;
   max-width: 100%;
   display: block;
   margin: 0 0 1em;
 
   &:focus {
-    border: 1px solid darken($borderColor, 10%);
+    border: 1px solid darken($border-color, 10%);
   }
 
   &[disabled],
   &.disabled {
     cursor: default;
-    background-color: $disabledGrey;
-    border-color: $disabledBorder;
+    background-color: $disabled-grey;
+    border-color: $disabled-border;
   }
 }
 
@@ -1151,14 +1149,14 @@ input[type="number"],
 input[type="tel"],
 textarea {
   &.error {
-    border-color: $errorRed;
-    background-color: $errorRedBg;
-    color: $errorRed;
+    border-color: $error-red;
+    background-color: $error-red-bg;
+    color: $error-red;
   }
 }
 
 label.error {
-  color: $errorRed;
+  color: $error-red;
 }
 
 
@@ -1304,7 +1302,7 @@ label.error {
   margin: 0 $gutter/2 $gutter/2;
   vertical-align: middle;
 
-  @include at-query ($min, $postSmall) {
+  @include at-query ($min, $post-small) {
     margin-left: 0;
   }
 
@@ -1345,7 +1343,7 @@ label.error {
   margin-left: -1px;
   text-decoration: none;
   background-color: #ffffff;
-  border: 1px solid $borderColor;
+  border: 1px solid $border-color;
 }
 .pagination-custom > li:first-child > a,
 .pagination-custom > li:first-child > span {
@@ -1373,8 +1371,8 @@ label.error {
   z-index: 2;
   color: #ffffff;
   cursor: default;
-  background-color: $colorBtnPrimary;
-  border-color: $colorBtnPrimary;
+  background-color: $color-btn-primary;
+  border-color: $color-btn-primary;
 }
 .pagination-custom > .disabled > span,
 .pagination-custom > .disabled > a,
@@ -1382,7 +1380,7 @@ label.error {
 .pagination-custom > .disabled > a:focus {
   color: #999999;
   cursor: not-allowed;
-  background-color: $disabledGrey;
+  background-color: $disabled-grey;
 }
 .pagination-custom-lg > li > a,
 .pagination-custom-lg > li > span {
@@ -1480,15 +1478,15 @@ label.error {
   #Site Nav and Dropdowns
 ==============================================================================*/
 .nav-bar {
-  background-color: $colorNav;
+  background-color: $color-nav;
 
   a {
-    color: $colorNavText;
+    color: $color-nav-text;
 
     &:hover,
     &:active,
     &:focus {
-      color: darken($colorNavText, 15%);
+      color: darken($color-nav-text, 15%);
     }
   }
 
@@ -1550,12 +1548,12 @@ label.error {
   }
 
   a {
-    background-color: $colorNav;
+    background-color: $color-nav;
 
     &:hover,
     &:active,
     &:focus {
-      background-color: darken($colorNav, 10%);
+      background-color: darken($color-nav, 10%);
     }
   }
 }
@@ -1582,10 +1580,10 @@ label.error {
   #Site Footer
 ==============================================================================*/
 .site-footer {
-  background-color: $colorFooterBg;
-  border-top: 1px solid $borderColor;
+  background-color: $color-footer-bg;
+  border-top: 1px solid $border-color;
   padding: $gutter 0;
-  color: $colorFooterText;
+  color: $color-footer-text;
 
   @include at-query ($min, $large) {
     padding: $gutter*2 0;
@@ -1715,7 +1713,7 @@ label.error {
 }
 
 .note {
-  border-color: $borderColor;
+  border-color: $border-color;
 }
 
 .errors {
@@ -1726,16 +1724,16 @@ label.error {
 }
 
 .form-success {
-  color: $successGreen;
-  background-color: lighten($successGreen, 65%);
-  border-color: $successGreen;
+  color: $success-green;
+  background-color: lighten($success-green, 65%);
+  border-color: $success-green;
 }
 
 .form-error,
 .errors {
-  color: $errorRed;
-  background-color: $errorRedBg;
-  border-color: $errorRed;
+  color: $error-red;
+  background-color: $error-red-bg;
+  border-color: $error-red;
 }
 
 
@@ -1746,7 +1744,7 @@ label.error {
 .cart-row {
   margin-top: $gutter;
   padding-top: $gutter;
-  border-top: 1px solid $borderColor;
+  border-top: 1px solid $border-color;
 
   #ajaxifyDrawer & {
     border-top-color: #444;
@@ -1762,10 +1760,10 @@ label.error {
   }
 
   a {
-    color: $colorTextBody;
+    color: $color-text-body;
 
     &:hover {
-      color: $colorPrimary;
+      color: $color-primary;
     }
   }
 }
