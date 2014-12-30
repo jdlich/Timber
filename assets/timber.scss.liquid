@@ -47,64 +47,15 @@
   background: linear-gradient(top bottom, $from 0%,$to 100%);
 }
 
-// Helper classes
-
-%clearfix, .clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both; }
-  *zoom: 1;
-}
-
-%hide-text, .hide-text {
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-%invisible, .invisible {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
 /*============================================================================
-  #Globals
+  #Reset
 ==============================================================================*/
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font:inherit;vertical-align:baseline;margin:0;padding:0;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:none;}table{border-collapse:collapse;border-spacing:0;}code,pre{background-color:#faf7f5;font-family:Consolas,monospace;border:0 none;padding:0 2px;color:#51ab62;}pre{overflow:auto;padding:0.5em;margin:0 0 1em;}
 
 *, input, :before, :after {
   @include vendor-prefix(box-sizing, border-box);
 }
-
-/*============================================================================
-  #Breakpoint and Grid Variables
-==============================================================================*/
-$viewportIncrement: 1px;
-
-$small: 480px;
-$medium: 768px;
-$large: 769px;
-
-$postSmall: $small + $viewportIncrement;
-$preMedium: $medium - $viewportIncrement;
-$preLarge: $large - $viewportIncrement;
-
-/*================ The following are dependencies of csswizardry grid ================*/
-$breakpoints: (
-  'small' '(max-width: #{$small})',
-  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
-  'medium-down' '(max-width: #{$medium})',
-  'large' '(min-width: #{$large})'
-);
-$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large');
-$breakpoint-has-push:  ('medium', 'medium-down', 'large');
-$breakpoint-has-pull:  ('medium', 'medium-down', 'large');
 
 /*============================================================================
   #General Variables
@@ -151,20 +102,44 @@ $errorRed: #dc0000;
 $errorRedBg: lighten($errorRed, 55%);
 $successGreen: #0a942a;
 
-// Width variables
-$siteWidth: 1180px;
-$gutter: 24px;
-$gridGutter: 24px; // can be a %, but nested grids will have smaller margins because of it
-
 // Radius
 $radius: 3px;
 
 /*============================================================================
-  Dependency-free breakpoint mixin
-    - http://blog.grayghostvisuals.com/sass/sass-media-query-mixin/
+  #Breakpoint and Grid Variables
 ==============================================================================*/
+
+$siteWidth: 1180px;
+$gutter: 24px;
+$gridGutter: 24px; // can be a %, but nested grids will have smaller margins because of it
+
+$viewportIncrement: 1px;
+
+$small: 480px;
+$medium: 768px;
+$large: 769px;
+
+$postSmall: $small + $viewportIncrement;
+$preMedium: $medium - $viewportIncrement;
+$preLarge: $large - $viewportIncrement;
+
+$breakpoints: (
+  'small' '(max-width: #{$small})',
+  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
+  'medium-down' '(max-width: #{$medium})',
+  'large' '(min-width: #{$large})'
+);
+$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large');
+$breakpoint-has-push:  ('medium', 'medium-down', 'large');
+$breakpoint-has-pull:  ('medium', 'medium-down', 'large');
+
+/*============================================================================
+  Dependency-free breakpoint mixin - http://bit.ly/1xuMHv3
+==============================================================================*/
+
 $min: min-width;
 $max: max-width;
+
 @mixin at-query($constraint, $viewport1, $viewport2:null) {
   @if $constraint == $min {
     @media screen and ($min: $viewport1) {
@@ -182,28 +157,14 @@ $max: max-width;
 }
 
 /*============================================================================
-  #Reset
-==============================================================================*/
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font:inherit;vertical-align:baseline;margin:0;padding:0;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:none;}table{border-collapse:collapse;border-spacing:0;}code,pre{background-color:#faf7f5;font-family:Consolas,monospace;border:0 none;padding:0 2px;color:#51ab62;}pre{overflow:auto;padding:0.5em;margin:0 0 1em;}
-
-/*============================================================================
   #Grid Setup
-    - Based on csswizardry grid, but with floated columns and a fixed gutter size
-    - Breakpoints defined above, under #Breakpoint and Grid Variables
-    - Note the inclusion of .grid-uniform to take care of clearfixes on evenly sized grid-items
 ==============================================================================*/
-$responsive:         true;
-$mobile-first:       true;
-$push:               true;
-$pull:               false;
 
-/* Force clearfix on grids */
 .grid,
 .grid-uniform {
   @extend %clearfix;
 }
 
-/* Manual grid-item clearfix */
 .grid-item.clear {
   clear: both;
 }
@@ -224,35 +185,29 @@ $pull:               false;
     }
   }
 
-  @if $breakpoint-found == false{
+  @if $breakpoint-found == false {
     @warn "Breakpoint '#{$media-query}' does not exist";
   }
 }
 
 /*============================================================================
-  Grid Setup
-    1. Allow the grid system to be used on lists.
-    2. Remove any margins and paddings that might affect the grid system.
-    3. Apply a negative `margin-left` to negate the columns' gutters.
+  #Grid
 ==============================================================================*/
+
 .grid,
 .grid-uniform {
   list-style:none;
   margin:0;
   padding:0;
-  margin-left:-$gridGutter;
+  margin-left: -$gridGutter;
 }
-
 .grid-item {
   float: left;
-  padding-left:$gridGutter;
-  vertical-align:top;
-  @if $mobile-first == true {
-    width:100%;
-  }
-  @include prefix(box-sizing, border-box);
+  padding-left: $gridGutter;
+  vertical-align: top;
+  width: 100%;
+  @include vendor-prefix(box-sizing, border-box);
 }
-
 .grid-uniform {
   font-size: 0;
 
@@ -264,89 +219,64 @@ $pull:               false;
   }
 }
 
-/*============================================================================
-  Reversed grids allow you to structure your source in the opposite
-  order to how your rendered layout will appear.
-==============================================================================*/
-.grid--rev {
+.grid--rev { /* Reverse the order of columns */
   @extend .grid;
-  direction:rtl;
-  text-align:left;
+  direction: rtl;
+  text-align: left;
 
   > .grid-item {
-    direction:ltr;
-    text-align:left;
+    direction: ltr;
+    text-align: left;
     float: right;
   }
 }
 
-/* Gutterless grids have all the properties of regular grids, minus any spacing. */
-.grid--full {
+.grid--full { /* Gutterless grids have all the properties of regular grids, minus any spacing. */
   @extend .grid;
-  margin-left:0;
+  margin-left: 0;
 
   > .grid-item {
-    padding-left:0;
+    padding-left: 0;
   }
 }
 
-/* Align the entire grid to the right. */
-.grid--right {
+.grid--right { /* Align the entire grid to the right. */
   @extend .grid;
-  direction:rtl;
-  text-align:right;
+  direction: rtl;
+  text-align: right;
 
   > .grid-item {
-    direction:ltr;
+    direction: ltr;
     float: right;
-    text-align:left;
+    text-align: left;
   }
 }
 
-/* Centered grids align grid items centrally without needing to use push or pull classes. */
-.grid--center {
-  @extend .grid;
-  text-align:center;
+/*================= Grid columns ==================*/
 
-  > .grid-item {
-    text-align:left;
-  }
-}
-
-/*============================================================================
-  WIDTHS
-    - Create width classes, prefixed by the specified namespace.
-==============================================================================*/
 @mixin device-type($namespace:"") {
-  /** Whole */
   .#{$namespace}one-whole       { width:100%; }
 
-  /* Halves */
   .#{$namespace}one-half        { width:50%; }
 
-  /* Thirds */
   .#{$namespace}one-third       { width:33.333%; }
   .#{$namespace}two-thirds      { width:66.666%; }
 
-  /* Quarters */
   .#{$namespace}one-quarter     { width:25%; }
   .#{$namespace}two-quarters    { @extend .#{$namespace}one-half; }
   .#{$namespace}three-quarters  { width:75%; }
 
-  /* Fifths */
   .#{$namespace}one-fifth       { width:20%; }
   .#{$namespace}two-fifths      { width:40%; }
   .#{$namespace}three-fifths    { width:60%; }
   .#{$namespace}four-fifths     { width:80%; }
 
-  /* Sixths */
   .#{$namespace}one-sixth       { width:16.666%; }
   .#{$namespace}two-sixths      { @extend .#{$namespace}one-third; }
   .#{$namespace}three-sixths    { @extend .#{$namespace}one-half; }
   .#{$namespace}four-sixths     { @extend .#{$namespace}two-thirds; }
   .#{$namespace}five-sixths     { width:83.333%; }
 
-  /* Eighths */
   .#{$namespace}one-eighth      { width:12.5%; }
   .#{$namespace}two-eighths     { @extend .#{$namespace}one-quarter; }
   .#{$namespace}three-eighths   { width:37.5%; }
@@ -355,7 +285,6 @@ $pull:               false;
   .#{$namespace}six-eighths     { @extend .#{$namespace}three-quarters; }
   .#{$namespace}seven-eighths   { width:87.5%; }
 
-  /* Tenths */
   .#{$namespace}one-tenth       { width:10%; }
   .#{$namespace}two-tenths      { @extend .#{$namespace}one-fifth; }
   .#{$namespace}three-tenths    { width:30%; }
@@ -366,7 +295,6 @@ $pull:               false;
   .#{$namespace}eight-tenths    { @extend .#{$namespace}four-fifths; }
   .#{$namespace}nine-tenths     { width:90%; }
 
-  /* Twelfths */
   .#{$namespace}one-twelfth     { width:8.333%; }
   .#{$namespace}two-twelfths    { @extend .#{$namespace}one-sixth; }
   .#{$namespace}three-twelfths  { @extend .#{$namespace}one-quarter; }
@@ -380,11 +308,8 @@ $pull:               false;
   .#{$namespace}eleven-twelfths { width:91.666%; }
 }
 
-/*============================================================================
-  HELPERS
-==============================================================================*/
-
 /*================ Helper show/hide classes around our breakpoints ================*/
+
 @mixin device-helper($namespace:"") {
   .#{$namespace}show        { display:block!important; }
   .#{$namespace}hide        { display:none!important; }
@@ -398,53 +323,44 @@ $pull:               false;
 }
 
 /*================ Our regular, non-responsive width and helper classes ================*/
+
 @include device-type();
 @include device-helper();
 
 /*================ Our responsive classes, if we have enabled them ================*/
-@if $responsive == true {
-  @each $name in $breakpoint-has-widths {
-    @include grid-media-query($name) {
-      @include device-type('#{$name}--');
-      @include device-helper('#{$name}--');
-    }
+
+@each $name in $breakpoint-has-widths {
+  @include grid-media-query($name) {
+    @include device-type('#{$name}--');
+    @include device-helper('#{$name}--');
   }
 }
 
-/*============================================================================
-  PUSH
-    - Push classes, to move grid items over to the right by certain amounts
-==============================================================================*/
+/*================= Push ==================*/
+
 @mixin push-setup($namespace: "") {
-  /* Whole */
   .push--#{$namespace}one-whole       { left:100%; }
 
-  /* Halves */
   .push--#{$namespace}one-half        { left:50%; }
 
-  /* Thirds */
   .push--#{$namespace}one-third       { left:33.333%; }
   .push--#{$namespace}two-thirds      { left:66.666%; }
 
-  /* Quarters */
   .push--#{$namespace}one-quarter     { left:25%; }
   .push--#{$namespace}two-quarters    { @extend .push--#{$namespace}one-half; }
   .push--#{$namespace}three-quarters  { left:75%; }
 
-  /* Fifths */
   .push--#{$namespace}one-fifth       { left:20%; }
   .push--#{$namespace}two-fifths      { left:40%; }
   .push--#{$namespace}three-fifths    { left:60%; }
   .push--#{$namespace}four-fifths     { left:80%; }
 
-  /* Sixths */
   .push--#{$namespace}one-sixth       { left:16.666%; }
   .push--#{$namespace}two-sixths      { @extend .push--#{$namespace}one-third; }
   .push--#{$namespace}three-sixths    { @extend .push--#{$namespace}one-half; }
   .push--#{$namespace}four-sixths     { @extend .push--#{$namespace}two-thirds; }
   .push--#{$namespace}five-sixths     { left:83.333%; }
 
-  /* Eighths */
   .push--#{$namespace}one-eighth      { left:12.5%; }
   .push--#{$namespace}two-eighths     { @extend .push--#{$namespace}one-quarter; }
   .push--#{$namespace}three-eighths   { left:37.5%; }
@@ -453,7 +369,6 @@ $pull:               false;
   .push--#{$namespace}six-eighths     { @extend .push--#{$namespace}three-quarters; }
   .push--#{$namespace}seven-eighths   { left:87.5%; }
 
-  /* Tenths */
   .push--#{$namespace}one-tenth       { left:10%; }
   .push--#{$namespace}two-tenths      { @extend .push--#{$namespace}one-fifth; }
   .push--#{$namespace}three-tenths    { left:30%; }
@@ -464,7 +379,6 @@ $pull:               false;
   .push--#{$namespace}eight-tenths    { @extend .push--#{$namespace}four-fifths; }
   .push--#{$namespace}nine-tenths     { left:90%; }
 
-  /* Twelfths */
   .push--#{$namespace}one-twelfth     { left:8.333%; }
   .push--#{$namespace}two-twelfths    { @extend .push--#{$namespace}one-sixth; }
   .push--#{$namespace}three-twelfths  { @extend .push--#{$namespace}one-quarter; }
@@ -478,54 +392,43 @@ $pull:               false;
   .push--#{$namespace}eleven-twelfths { left:91.666%; }
 }
 
-@if $push == true {
-  [class*="push--"]{ position:relative; }
+[class*="push--"] {
+  position:relative;
+}
 
-  @include push-setup();
+@include push-setup();
 
-  @if $responsive == true {
-    @each $name in $breakpoint-has-push {
-      @include grid-media-query($name) {
-        @include push-setup('#{$name}--');
-      }
-    }
+@each $name in $breakpoint-has-push {
+  @include grid-media-query($name) {
+    @include push-setup('#{$name}--');
   }
 }
 
-/*============================================================================
-  PULL
-    - Pull classes, to move grid items back to the left by certain amounts
-==============================================================================*/
+/*================= Pull ==================*/
+
 @mixin pull-setup($namespace: "") {
-  /* Whole */
   .pull--#{$namespace}one-whole       { right:100%; }
 
-  /* Halves */
   .pull--#{$namespace}one-half        { right:50%; }
 
-  /* Thirds */
   .pull--#{$namespace}one-third       { right:33.333%; }
   .pull--#{$namespace}two-thirds      { right:66.666%; }
 
-  /* Quarters */
   .pull--#{$namespace}one-quarter     { right:25%; }
   .pull--#{$namespace}two-quarters    { @extend .pull--#{$namespace}one-half; }
   .pull--#{$namespace}three-quarters  { right:75%; }
 
-  /* Fifths */
   .pull--#{$namespace}one-fifth       { right:20%; }
   .pull--#{$namespace}two-fifths      { right:40%; }
   .pull--#{$namespace}three-fifths    { right:60%; }
   .pull--#{$namespace}four-fifths     { right:80%; }
 
-  /* Sixths */
   .pull--#{$namespace}one-sixth       { right:16.666%; }
   .pull--#{$namespace}two-sixths      { @extend .pull--#{$namespace}one-third; }
   .pull--#{$namespace}three-sixths    { @extend .pull--#{$namespace}one-half; }
   .pull--#{$namespace}four-sixths     { @extend .pull--#{$namespace}two-thirds; }
   .pull--#{$namespace}five-sixths     { right:83.333%; }
 
-  /* Eighths */
   .pull--#{$namespace}one-eighth      { right:12.5%; }
   .pull--#{$namespace}two-eighths     { @extend .pull--#{$namespace}one-quarter; }
   .pull--#{$namespace}three-eighths   { right:37.5%; }
@@ -534,7 +437,6 @@ $pull:               false;
   .pull--#{$namespace}six-eighths     { @extend .pull--#{$namespace}three-quarters; }
   .pull--#{$namespace}seven-eighths   { right:87.5%; }
 
-  /* Tenths */
   .pull--#{$namespace}one-tenth       { right:10%; }
   .pull--#{$namespace}two-tenths      { @extend .pull--#{$namespace}one-fifth; }
   .pull--#{$namespace}three-tenths    { right:30%; }
@@ -545,7 +447,6 @@ $pull:               false;
   .pull--#{$namespace}eight-tenths    { @extend .pull--#{$namespace}four-fifths; }
   .pull--#{$namespace}nine-tenths     { right:90%; }
 
-  /* Twelfths */
   .pull--#{$namespace}one-twelfth     { right:8.333%; }
   .pull--#{$namespace}two-twelfths    { @extend .pull--#{$namespace}one-sixth; }
   .pull--#{$namespace}three-twelfths  { @extend .pull--#{$namespace}one-quarter; }
@@ -559,23 +460,76 @@ $pull:               false;
   .pull--#{$namespace}eleven-twelfths { right:91.666%; }
 }
 
-@if $pull == true {
-  [class*="pull--"]{ position:relative; }
+[class*="pull--"] {
+  position:relative;
+}
 
-  @include pull-setup();
+@include pull-setup();
 
-  @if $responsive == true{
-    @each $name in $breakpoint-has-pull {
-      @include grid-media-query($name) {
-        @include pull-setup('#{$name}--');
-      }
-    }
+@each $name in $breakpoint-has-pull {
+  @include grid-media-query($name) {
+    @include pull-setup('#{$name}--');
   }
+}
+
+/*============================================================================
+  #Helper Classes
+==============================================================================*/
+
+%clearfix, .clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both; }
+  *zoom: 1;
+}
+
+%hide-text, .hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+%invisible, .invisible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
+.display-table {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.display-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+  float: none;
 }
 
 /*============================================================================
   #Basic Styles
 ==============================================================================*/
+
 html {
   background-color: $colorFooterBg;
 }
@@ -600,28 +554,6 @@ body {
   padding-top: $gutter;
   padding-bottom: $gutter*2;
 }
-
-/*============================================================================
-  #Helper Classes
-==============================================================================*/
-.left { float: left; }
-.right { float: right; }
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.hidden { display: none; }
-
-.display-table {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-}
-
-.display-table-cell {
-  display: table-cell;
-  vertical-align: middle;
-  float: none;
-}
-
 
 /*============================================================================
   #Typography
@@ -1299,16 +1231,8 @@ label.error {
   }
 }
 
-/*============================================================================
-  A generic way to visually hide content while
-  remaining accessible to screen readers (h5bp.com)
-==============================================================================*/
 .supports-fontface .icon-fallback-text .fallback-text {
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  position: absolute;
-  height: 1px;
-  width: 1px;
+  @extend %invisible;
 }
 
 .icon:before {
@@ -1329,7 +1253,6 @@ label.error {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*================ Icon mapping ================*/
 .icon-american_express:before { content: "\41"; }
 .icon-arrow-down:before { content: "\34"; }
 .icon-bitcoin:before { content: "\42"; }
@@ -1401,22 +1324,19 @@ label.error {
 /*============================================================================
   #Pagination
 ==============================================================================*/
+
 .pagination {
   margin-bottom: 1em;
 }
-
-/*================ Custom Pagination ================*/
 .pagination-custom {
   display: inline-block;
   padding-left: 0;
   margin: 0 0 $gutter;
   border-radius: $radius;
 }
-
 .pagination-custom > li {
   display: inline;
 }
-
 .pagination-custom > li > a,
 .pagination-custom > li > span {
   position: relative;
@@ -1427,27 +1347,23 @@ label.error {
   background-color: #ffffff;
   border: 1px solid $borderColor;
 }
-
 .pagination-custom > li:first-child > a,
 .pagination-custom > li:first-child > span {
   margin-left: 0;
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
 }
-
 .pagination-custom > li:last-child > a,
 .pagination-custom > li:last-child > span {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-
 .pagination-custom > li > a:hover,
 .pagination-custom > li > span:hover,
 .pagination-custom > li > a:focus,
 .pagination-custom > li > span:focus {
   background-color: #eeeeee;
 }
-
 .pagination-custom > .active > a,
 .pagination-custom > .active > span,
 .pagination-custom > .active > a:hover,
@@ -1460,7 +1376,6 @@ label.error {
   background-color: $colorBtnPrimary;
   border-color: $colorBtnPrimary;
 }
-
 .pagination-custom > .disabled > span,
 .pagination-custom > .disabled > a,
 .pagination-custom > .disabled > a:hover,
@@ -1469,47 +1384,41 @@ label.error {
   cursor: not-allowed;
   background-color: $disabledGrey;
 }
-
 .pagination-custom-lg > li > a,
 .pagination-custom-lg > li > span {
   padding: 10px 16px;
   font-size: 1.8rem;
 }
-
 .pagination-custom-lg > li:first-child > a,
 .pagination-custom-lg > li:first-child > span {
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
 }
-
 .pagination-custom-lg > li:last-child > a,
 .pagination-custom-lg > li:last-child > span {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
-
 .pagination-custom-sm > li > a,
 .pagination-custom-sm > li > span {
   padding: 5px 10px;
   font-size: 1.2rem;
 }
-
 .pagination-custom-sm > li:first-child > a,
 .pagination-custom-sm > li:first-child > span {
   border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
 }
-
 .pagination-custom-sm > li:last-child > a,
 .pagination-custom-sm > li:last-child > span {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
 
-
 /*============================================================================
   #Site Header
 ==============================================================================*/
+
 .site-header {
   padding: $gutter/2 0;
 
@@ -1689,11 +1598,9 @@ label.error {
 .sold-out {
 
 }
-
 .on-sale {
 
 }
-
 .product-list-image {
   display: block;
   float: left;
@@ -1701,7 +1608,6 @@ label.error {
   margin-bottom: $gutter;
   max-width: 40%;
 }
-
 .product-grid-image {
   display: block;
   margin: 0 auto;
@@ -1715,6 +1621,7 @@ label.error {
 /*============================================================================
   #Collection Filters
 ==============================================================================*/
+
 .active-filter {
   font-weight: bold;
 }
@@ -1722,6 +1629,7 @@ label.error {
 /*============================================================================
   #Breadcrumbs
 ==============================================================================*/
+
 .breadcrumb {
   margin-bottom: $gutter;
 
@@ -1737,14 +1645,13 @@ label.error {
   }
 }
 
-
 /*============================================================================
   #Product Page
 ==============================================================================*/
+
 .product-price {
   font-weight: bold;
 }
-
 .product-variants {
   display: none;
 
@@ -1752,11 +1659,9 @@ label.error {
     display: block;
   }
 }
-
 .product-photo-container {
   margin-bottom: $gutter;
 }
-
 .product-photo-container,
 .product-photo-thumbs {
   a, img {
@@ -1773,11 +1678,9 @@ label.error {
   #Blogs and Comments
 ==============================================================================*/
 
-/*================ Comments ================*/
 .comment-content {
   margin-bottom: -$gutter/2;
 }
-
 .comment-author {
   font-size: 1.4rem;
   font-style: italic;
@@ -1788,6 +1691,7 @@ label.error {
 /*============================================================================
   #Notes and Form Feedback
 ==============================================================================*/
+
 .note,
 .errors {
   border-radius: $radius;
@@ -1838,6 +1742,7 @@ label.error {
 /*============================================================================
   #Cart Page
 ==============================================================================*/
+
 .cart-row {
   margin-top: $gutter;
   padding-top: $gutter;
@@ -1864,24 +1769,10 @@ label.error {
     }
   }
 }
-
 .cart-subtotal {
   margin-bottom: $gutter;
 }
-
 .cart-subtotal--price {
   margin: 0 0 0 $gutter/3;
   display: inline;
-}
-
-/*============================================================================
-  #Demo Styles - for empty store state
-==============================================================================*/
-.demo-image {
-  background: url('//cdn.shopify.com/s/files/1/0383/9765/t/1/assets/blankslate-producticon.png?4') no-repeat center center #eee;
-  display: block;
-  text-align: center;
-  padding: 100px 0;
-  color: #aaa;
-  text-decoration: none;
 }
