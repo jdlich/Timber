@@ -1,55 +1,85 @@
 /*============================================================================
-  Shopify Timber v1.3.0
-  Copyright 2014 Shopify Inc.
-  Author Carson Shold @cshold
-  Built with Sass - http://sass-lang.com/
-
-  Some things to know about this file:
-    - Sass is compiled on Shopify's server so you don't need to convert it to CSS yourself
-    - The output CSS is compressed and comments are removed
-    - You cannot use @imports in this file
-        * Use grunt or gulp tasks to enable @imports - https://github.com/Shopify/shopify-css-import
-    - Helpers variables, mixins, and starter classes are provided. Change as needed.
-    - The file is prepped with a CSS reset
+  #Sass Mixins
 ==============================================================================*/
 
-/*============================================================================
-  Table of Contents
+@mixin placeholder-color($color) {
+  &::-webkit-input-placeholder {
+     color: $color;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+     color: $color;
+  }
+  &::-moz-placeholder {  /* Firefox 19+ */
+     color: $color;
+  }
+  &:-ms-input-placeholder {
+     color: $color;
+  }
+}
 
-  #Breakpoint and Grid Variables
-  #General Variables
-  #Sass Mixins
-  #Reset
-  #Grid Setup
-  #Basic Styles
-  #Helper Classes
-  #Typography
-  #Rich Text Editor
-  #Links and Buttons
-  #Lists
-  #Tables
-  #OOCSS Media Object
-  #Images and Iframes
-  #Forms
-  #Icons
-  #Pagination
-  #Site Header
-  #Site Nav and Dropdowns
-  #Site Footer
-  #Product Grid and List Views
-  #Collection Filters
-  #Breadcrumbs
-  #Product Page
-  #Blogs and Comments
-  #Notes and Form Feedback
-  #Cart Page
-  #Demo Styles - for empty store state
+@mixin vendor-prefix($property, $value) {
+  -webkit-#{$property}: $value;
+  -ms-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes $animation-name {
+    @content;
+  }
+  @-moz-keyframes $animation-name {
+    @content;
+  }
+  @keyframes $animation-name {
+    @content;
+  }
+}
+
+@mixin gradient($from, $to, $fallback) {
+  background: $fallback;
+  background: -moz-linear-gradient(top, $from 0%, $to 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to));
+  background: -webkit-linear-gradient(top, $from 0%,$to 100%);
+  background: -o-linear-gradient(top, $from 0%,$to 100%);
+  background: -ms-linear-gradient(top, $from 0%,$to 100%);
+  background: linear-gradient(top bottom, $from 0%,$to 100%);
+}
+
+// Helper classes
+
+%clearfix, .clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both; }
+  *zoom: 1;
+}
+
+%hide-text, .hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+%invisible, .invisible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*============================================================================
+  #Globals
 ==============================================================================*/
 
 *, input, :before, :after {
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  box-sizing:border-box;
+  @include vendor-prefix(box-sizing, border-box);
 }
 
 /*============================================================================
@@ -130,79 +160,12 @@ $gridGutter: 24px; // can be a %, but nested grids will have smaller margins bec
 $radius: 3px;
 
 /*============================================================================
-  #Sass Mixins
-==============================================================================*/
-%clearfix, .clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both; }
-  *zoom: 1;
-}
-
-%hide-text, .hide-text {
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-%invisible, .invisible {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-@mixin box-shadow($shadow) {
-  -webkit-box-shadow: #{$shadow};
-  -moz-box-shadow:    #{$shadow};
-  box-shadow:         #{$shadow};
-}
-
-@mixin transition($transition:0.1s all) {
-  -webkit-transition: #{$transition};
-  -moz-transition: #{$transition};
-  -o-transition: #{$transition};
-  transition: #{$transition};
-}
-
-@mixin gradient($from, $to, $fallback) {
-  background: $fallback;
-  background: -moz-linear-gradient(top, $from 0%, $to 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to));
-  background: -webkit-linear-gradient(top, $from 0%,$to 100%);
-  background: -o-linear-gradient(top, $from 0%,$to 100%);
-  background: -ms-linear-gradient(top, $from 0%,$to 100%);
-  background: linear-gradient(top bottom, $from 0%,$to 100%);
-}
-
-@mixin backface($visibility: hidden) {
-  -moz-backface-visibility: $visibility;
-  -webkit-backface-visibility: $visibility;
-  -o-backface-visibility: $visibility;
-  backface-visibility: $visibility;
-}
-
-@function color-control($color) {
-  @if (lightness( $color ) > 40) {
-    @return #000;
-  }
-  @else {
-    @return #fff;
-  }
-}
-
-/*============================================================================
   Dependency-free breakpoint mixin
     - http://blog.grayghostvisuals.com/sass/sass-media-query-mixin/
 ==============================================================================*/
 $min: min-width;
 $max: max-width;
-@mixin at-query ($constraint, $viewport1, $viewport2:null) {
+@mixin at-query($constraint, $viewport1, $viewport2:null) {
   @if $constraint == $min {
     @media screen and ($min: $viewport1) {
       @content;
@@ -287,9 +250,7 @@ $pull:               false;
   @if $mobile-first == true {
     width:100%;
   }
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  box-sizing:border-box;
+  @include prefix(box-sizing, border-box);
 }
 
 .grid-uniform {
@@ -925,11 +886,7 @@ a:focus {
   white-space: nowrap;
   cursor: pointer;
   border: 1px solid transparent;
-  -webkit-user-select: none;
-  -moz-user-select:    none;
-  -ms-user-select:     none;
-  -o-user-select:      none;
-  user-select:         none;
+  @include vendor-prefix(user-select, none);
   -webkit-appearance: none;
   border-radius: $radius;
 
@@ -1402,11 +1359,7 @@ label.error {
 .icon-youtube:before { content: "\79"; }
 
 .payment-icons {
-  -webkit-user-select: none;
-  -moz-user-select:    none;
-  -ms-user-select:     none;
-  -o-user-select:      none;
-  user-select:         none;
+  @include vendor-prefix(user-select, none);
   cursor: default;
 
   li {
